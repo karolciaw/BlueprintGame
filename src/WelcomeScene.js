@@ -28,7 +28,7 @@ var startLabel = this.add.text(
   );
   startLabel.setOrigin(0.5, 0.5);
 
-  this downArrow = this.input.keyboard.addKey(
+  this.downArrow = this.input.keyboard.addKey(
     Phaser.Input.KeyCodes.UP,
   );
    this.downArrow.on("up", () => {
