@@ -11,7 +11,7 @@ class SceneName extends Phaser.Scene {
 	preload() {
 		// called at the beginning to load assets
 		this.load.image("logo", "asset_link_here.png");
-		this.load.image("enemy", "assets/enemy.png");
+		this.load.image("enemy", "assets/laser.png");
 	}
 	createLogo() {
 		// called after preload method
@@ -312,12 +312,10 @@ this.time.addEvent({
 
 
 // TODO 3: Add WelcomeScene
-class WelcomeScene extends Phaser.Scene {
 	// you want a constructor(), preload(), and create() function
 
 	// TODO 4: Add a create() function that displays a welcome message.
 	// TODO 6: Add logic to start the game (switching scenes) to the create() function
-}
 
 // config! 
 const config = {
@@ -325,7 +323,7 @@ const config = {
 	width: 800,
 	height: 560,
 	// TODO 5: Add WelcomeScene to the list of scenes. Think about the order!
-	scene: [GameScene],
+	scene: [GameScene, WelcomeScene],
 	physics: {
 		default: "arcade",
 	},
