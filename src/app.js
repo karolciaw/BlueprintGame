@@ -276,6 +276,8 @@ class GameScene extends Phaser.Scene {
 	* Called when the player dies. Restart the game
 	*/
 	handlePlayerDeath() {
+		this.scene.restart();
+		consol.log("i'm dead");
 		this.deadSound.play();
 		this.emitter.explode(this.emitter.quantity, this.player.x, this.player.y);
 
@@ -287,8 +289,29 @@ class GameScene extends Phaser.Scene {
 		this.enemies.clear(true, true);
 
 		// TODO 7.4: decrement lives and update the lives label
+		this.lives -= 1;
+		this.updateLivesLabel();
+		this.time.addEvent({
+			delay: 1000,
+			callback; () => {
+			if (this.lives > 0) {
+				this.player.setVisible(true);
+				this.player.setActive(true);
+				this.player.setPosition(
+					this.game.config.width / 2,
+					this.game.config.height / 2,
+				);
+			} else {
+				this.scene.start("WelcomeScene");
+			}
+		},
+	});
+}	
 
-
+updateLivesLabel() {
+	this.livesLabel.setText("lives: " + this.lives);
+}
+}
 		// restart the scene after 1 second
 		this.time.addEvent({
 			delay: 1000,
