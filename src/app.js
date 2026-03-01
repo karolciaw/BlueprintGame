@@ -1,6 +1,21 @@
 import Phaser from "phaser";
 import GameScene from "./gameScene";
+import WelcomeScene from "./welcomeScene";
 
+// config! 
+const config = {
+	type: Phaser.AUTO,
+	width: 800,
+	height: 560,
+	// TODO 5: Add WelcomeScene to the list of scenes. Think about the order!
+	scene: [WelcomeScene, GameScene],
+	physics: {
+		default: "arcade",
+	},
+	backgroundColor: "#3498db",
+};
+
+const game = new Phaser.Game(config);
 // TODO 1: Move this GameScene into gameScene.js, a new file
 class SceneName extends Phaser.Scene {
 
@@ -180,13 +195,25 @@ this.player = this.physics.add.sprite(this.game.config.width / 2, this.game.conf
 // player movement animations
 this.anims.create({
 	key: "right",
-	frames: this.anims.generateFrameNumbers("player", { frames: [1, 2] }),
+	frames: this.anims.generateFrameNumbers("player", { frames: ["assets/DuckPlayerRunRight1.png", "assets/DuckPlayerRunRight2.png"] }),
 	frameRate: 8,
 	repeat: -1,
 });
 this.anims.create({
 	key: "left",
-	frames: this.anims.generateFrameNumbers("player", { frames: [3, 4] }),
+	frames: this.anims.generateFrameNumbers("player", { frames:["assets/DuckPlayerRunLeft1.png", "assets/DuckPlayerRunLeft2.png"] }),
+	frameRate: 8,
+	repeat: -1,
+});
+this.anims.create({
+	key: "up",
+	frames: this.anims.generateFrameNumbers("player", { frames:["assets/DuckPlayerRunUp1.png", "assets/DuckPlayerRunUp2.png"] }),
+	frameRate: 8,
+	repeat: -1,
+});
+this.anims.create({
+	key: "up",
+	frames: this.anims.generateFrameNumbers("player", { frames:["assets/DuckPlayerRunDown1.png", "assets/DuckPlayerRunDown2.png"] }),
 	frameRate: 8,
 	repeat: -1,
 });
@@ -308,26 +335,3 @@ this.time.addEvent({
 		}
 	}
 });
-
-
-
-// TODO 3: Add WelcomeScene
-	// you want a constructor(), preload(), and create() function
-
-	// TODO 4: Add a create() function that displays a welcome message.
-	// TODO 6: Add logic to start the game (switching scenes) to the create() function
-
-// config! 
-const config = {
-	type: Phaser.AUTO,
-	width: 800,
-	height: 560,
-	// TODO 5: Add WelcomeScene to the list of scenes. Think about the order!
-	scene: [GameScene, WelcomeScene],
-	physics: {
-		default: "arcade",
-	},
-	backgroundColor: "#3498db",
-};
-
-const game = new Phaser.Game(config);
