@@ -20,6 +20,7 @@ class GameScene extends Phaser.Scene {
     this.load.audio("dead", ["assets/dead.ogg", "assets/dead.mp3"]);
 
     this.load.image("pixel", "assets/pixel.png");
+    this.load.image("laser", "assets/laser.png");
   }
 }
 export default GameScene;
