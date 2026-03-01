@@ -127,43 +127,44 @@ class SceneName extends Phaser.Scene {
 		}
 
 	}
-	
-
-	
-		while(true){
-			setTimeout(() => {
-				this.lasers.disabled = true;
-				this.lasers.style.visibility = "hidden";
-			},2000);
-			
-			setTimeout(() => {
-				this.lasers.disabled = false;
-				this.lasers.style.visibility = "visible";
-			},2000);
-			
-		}
 
 
-	createLasers(){
-		if(level == 1){
-			let positionsOne = [{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100}];
-			
-			for (let i = 1; i<5; i++){
-				let laser = this.lasers.create(i.x, i.y, "laser"); 	
+
+
+
+
+	createLasers() {
+		if (level == 1) {
+			let positionsOne = [{ x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }];
+
+			for (let i = 1; i < 5; i++) {
+				let laser = this.lasers.create(i.x, i.y, "laser");
 			}
-			while(!this.laser==null){
+			while (!this.laser == null) {
 
 			}
 		} else if (level == 2) {
-			let positionsTwo = [{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100}];
-			for (let i = 1; i<5; i++){
+			let positionsTwo = [{ x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }];
+			for (let i = 1; i < 5; i++) {
 				let laser = this.lasers.create(i.x, i.y, "laser");
 			}
 		} else if (level == 3) {
-			let positionsThree = [{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100}];
-			for (let i = 1; i<5; i++){
+			let positionsThree = [{ x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }];
+			for (let i = 1; i < 5; i++) {
 				let laser = this.lasers.create(i.x, i.y, "laser");
 			}
+		}
+		for (let i = 0; i < 10000; i++) {
+			setTimeout(() => {
+				this.lasers.disabled = true;
+				this.lasers.style.visibility = "hidden";
+			}, 2000);
+
+			setTimeout(() => {
+				this.lasers.disabled = false;
+				this.lasers.style.visibility = "visible";
+			}, 2000);
+
 		}
 	}
 
@@ -352,10 +353,10 @@ this.time.addEvent({
 
 
 // TODO 3: Add WelcomeScene
-	// you want a constructor(), preload(), and create() function
+// you want a constructor(), preload(), and create() function
 
-	// TODO 4: Add a create() function that displays a welcome message.
-	// TODO 6: Add logic to start the game (switching scenes) to the create() function
+// TODO 4: Add a create() function that displays a welcome message.
+// TODO 6: Add logic to start the game (switching scenes) to the create() function
 
 // config! 
 const config = {
