@@ -127,21 +127,22 @@ class SceneName extends Phaser.Scene {
 		}
 
 	}
-	sleep (ms) {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	}
+	
 
-	async function delayedLoop(){
+	
 		while(true){
-			await sleep(3000);
-			this.lasers.disabled = true;
-			this.lasers.style.visibility = "hidden";
-			await sleep(5000);
-			this.lasers.disabled = false;
-			this.lasers.style.visibility = "visible";
+			setTimeout(() => {
+				this.lasers.disabled = true;
+				this.lasers.style.visibility = "hidden";
+			},2000);
+			
+			setTimeout(() => {
+				this.lasers.disabled = false;
+				this.lasers.style.visibility = "visible";
+			},2000);
 			
 		}
-	}
+
 
 	createLasers(){
 		if(level == 1){
