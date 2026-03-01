@@ -112,7 +112,7 @@ class SceneName extends Phaser.Scene {
 		}
 
 		if (this.level == 2) {
-
+			this.enemies.clear(true, true);
 			let enemy4 = this.enemies.create(400, 300, "enemy");
 			enemy4.body.bounce.x = 1;
 			enemy4.body.velocity.x = 100;
@@ -127,7 +127,7 @@ class SceneName extends Phaser.Scene {
 		}
 
 		if (this.level == 3) {
-
+			this.enemies.clear(true, true);
 			let enemy7 = this.enemies.create(400, 300, "enemy");
 			enemy7.body.bounce.x = 1;
 			enemy7.body.velocity.x = 100;
@@ -144,6 +144,44 @@ class SceneName extends Phaser.Scene {
 	}
 
 
+
+
+
+
+	createLasers() {
+		if (level == 1) {
+			let positionsOne = [{ x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }];
+
+			for (let i = 1; i < 5; i++) {
+				let laser = this.lasers.create(i.x, i.y, "laser");
+			}
+			while (!this.laser == null) {
+
+			}
+		} else if (level == 2) {
+			let positionsTwo = [{ x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }];
+			for (let i = 1; i < 5; i++) {
+				let laser = this.lasers.create(i.x, i.y, "laser");
+			}
+		} else if (level == 3) {
+			let positionsThree = [{ x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }, { x: 100, y: 100 }];
+			for (let i = 1; i < 5; i++) {
+				let laser = this.lasers.create(i.x, i.y, "laser");
+			}
+		}
+		for (let i = 0; i < 10000; i++) {
+			setTimeout(() => {
+				this.lasers.disabled = true;
+				this.lasers.style.visibility = "hidden";
+			}, 2000);
+
+			setTimeout(() => {
+				this.lasers.disabled = false;
+				this.lasers.style.visibility = "visible";
+			}, 2000);
+
+		}
+	}
 
 	handlePlayerDeath() {
 		this.scene.restart();
@@ -201,19 +239,19 @@ this.anims.create({
 });
 this.anims.create({
 	key: "left",
-	frames: this.anims.generateFrameNumbers("player", { frames:["assets/DuckPlayerRunLeft1.png", "assets/DuckPlayerRunLeft2.png"] }),
+	frames: this.anims.generateFrameNumbers("player", { frames: ["assets/DuckPlayerRunLeft1.png", "assets/DuckPlayerRunLeft2.png"] }),
 	frameRate: 8,
 	repeat: -1,
 });
 this.anims.create({
 	key: "up",
-	frames: this.anims.generateFrameNumbers("player", { frames:["assets/DuckPlayerRunUp1.png", "assets/DuckPlayerRunUp2.png"] }),
+	frames: this.anims.generateFrameNumbers("player", { frames: ["assets/DuckPlayerRunUp1.png", "assets/DuckPlayerRunUp2.png"] }),
 	frameRate: 8,
 	repeat: -1,
 });
 this.anims.create({
 	key: "up",
-	frames: this.anims.generateFrameNumbers("player", { frames:["assets/DuckPlayerRunDown1.png", "assets/DuckPlayerRunDown2.png"] }),
+	frames: this.anims.generateFrameNumbers("player", { frames: ["assets/DuckPlayerRunDown1.png", "assets/DuckPlayerRunDown2.png"] }),
 	frameRate: 8,
 	repeat: -1,
 });
@@ -247,6 +285,7 @@ this.updateLivesLabel();
 
 // add enemies!
 this.enemies = this.physics.add.group();
+this.lasers = this.physics.add.group();
 // call this.addEnemy() once every 2.2 seconds
 this.time.addEvent({
 	delay: 2200,
@@ -259,7 +298,9 @@ this.physics.add.collider(this.enemies, this.walls);
 this.physics.add.collider(this.player, this.enemies, () => {
 	this.handlePlayerDeath();
 });
-
+this.physics.add.collider(this.player, this.lasers, () => {
+	this.handlePlayerDeath();
+});
 
 this.coinSound = this.sound.add("coin");
 this.deadSound = this.sound.add("dead");
@@ -335,3 +376,26 @@ this.time.addEvent({
 		}
 	}
 });
+
+
+
+// TODO 3: Add WelcomeScene
+// you want a constructor(), preload(), and create() function
+
+// TODO 4: Add a create() function that displays a welcome message.
+// TODO 6: Add logic to start the game (switching scenes) to the create() function
+
+// config! 
+const config = {
+	type: Phaser.AUTO,
+	width: 800,
+	height: 560,
+	// TODO 5: Add WelcomeScene to the list of scenes. Think about the order!
+	scene: [GameScene, WelcomeScene],
+	physics: {
+		default: "arcade",
+	},
+	backgroundColor: "#3498db",
+};
+
+const game = new Phaser.Game(config);
