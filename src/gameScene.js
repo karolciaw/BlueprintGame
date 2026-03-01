@@ -21,6 +21,5 @@ class GameScene extends Phaser.Scene {
 
     this.load.image("pixel", "assets/pixel.png");
   }
-
+}
 export default GameScene;
-

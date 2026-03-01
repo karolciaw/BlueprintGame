@@ -15,16 +15,16 @@ create() {
 let nameLabel = this.add.text(
   this.game.config.width / 2,
   150, 
-  "Duck Heist"
-  { font: "100 px Geo", fill "#ffffff" ), 
-  );
+  "Duck Heist",
+  { font: "100 px Geo", fill: "#ffffff" },
+ );
   nameLabel.setOrigin(0.5, 0.5);
 
 var startLabel = this.add.text(
   this.game.config.width / 2,
   this.game.config.height - 150,
   "press the up arrow key to start", 
-  { font: "40 px Arial", fill: "#ffffff" }, 
+  { font: "40 px Arial", fill: "#ffffff" },
   );
   startLabel.setOrigin(0.5, 0.5);
 

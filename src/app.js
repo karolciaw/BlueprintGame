@@ -3,6 +3,8 @@ import GameScene from "./gameScene";
 
 // TODO 1: Move this GameScene into gameScene.js, a new file
 class SceneName extends Phaser.Scene {
+
+
 	constructor() {
 		super("SceneName");
 	}
