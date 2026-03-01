@@ -127,6 +127,21 @@ class SceneName extends Phaser.Scene {
 		}
 
 	}
+	sleep (ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	async function delayedLoop(){
+		while(true){
+			await sleep(3000);
+			this.lasers.disabled = true;
+			this.lasers.style.visibility = "hidden";
+			await sleep(5000);
+			this.lasers.disabled = false;
+			this.lasers.style.visibility = "visible";
+			
+		}
+	}
 
 	createLasers(){
 		if(level == 1){
@@ -134,6 +149,9 @@ class SceneName extends Phaser.Scene {
 			
 			for (let i = 1; i<5; i++){
 				let laser = this.lasers.create(i.x, i.y, "laser"); 	
+			}
+			while(!this.laser==null){
+
 			}
 		} else if (level == 2) {
 			let positionsTwo = [{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100},{x:100, y: 100}];
