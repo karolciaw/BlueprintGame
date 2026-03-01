@@ -82,9 +82,9 @@ class GameScene extends Phaser.Scene {
 		this.score = 0;
 			
    		this.lives = 3;
-    this.livesLabel = this.add.text(30, 50, "", {
-      font: "18px Arial",
-      fill: "#ffffff",
+    	this.livesLabel = this.add.text(30, 50, "", {
+      		font: "18px Arial",
+      		fill: "#ffffff",
     });
     this.updateLivesLabel();
 
@@ -104,7 +104,7 @@ class GameScene extends Phaser.Scene {
 			this.handlePlayerDeath();
 		});
 
-		this.jumpSound = this.sound.add("jump");
+			
 		this.coinSound = this.sound.add("coin");
 		this.deadSound = this.sound.add("dead");
 
@@ -187,12 +187,19 @@ class GameScene extends Phaser.Scene {
 			this.player.setFrame(0);
 		}
 
-		if (this.cursors.up.isDown && this.player.body.onFloor()) {
-			// jump if the player is on the ground
-			this.player.body.velocity.y = -320;
-			this.jumpSound.play();
-		}
+		if (this.cursors.up.isDown) {
+      // move up
+      this.player.body.velocity.y = -200;
+      this.player.anims.play("up", true);
+    } else if (this.cursors.down.isDown) {
+	  // move down
+	  this.player.body.velocity.y = 200;
+	  this.player.anims.play("down", true);
+	} else {
+	// stop moving in the vertical
+	this.player.body.velocity.y = 0;
 	}
+  }
 
 	/**
 	 * Check to see whether the player has collided with any coins
