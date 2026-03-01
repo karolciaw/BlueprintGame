@@ -6,25 +6,26 @@ class GameScene extends Phaser.Scene {
 	constructor() {
 		super("GameScene")
 	}
-	preload() {
-		this.load.spritesheet("player", "assets/player2.png", {
-			frameWidth: 20,
-			frameHeight: 20,
-		});
+ preload() {
+    this.load.spritesheet("player", "duckPlayer.png", {
+      frameWidth: 20,
+      frameHeight: 20,
+    });
 
-		this.load.image("tileset", "assets/tileset.png");
-		// created with Tiled tilemap editor
-		this.load.tilemapTiledJSON("map", "assets/map.json");
+    this.load.image("tileset", "assets/tileset.png");
+    // created with Tiled tilemap editor
+    this.load.tilemapTiledJSON("map", "assets/map.json");
 
-		this.load.image("coin", "assets/coin.png");
-		this.load.image("enemy", "assets/enemy.png");
+    this.load.image("coin", "rubberDuck.png");
+    this.load.image("enemy", "assets/enemy.png");
 
-		this.load.audio("jump", ["assets/jump.ogg", "assets/jump.mp3"]);
-		this.load.audio("coin", ["assets/coin.ogg", "assets/coin.mp3"]);
-		this.load.audio("dead", ["assets/dead.ogg", "assets/dead.mp3"]);
+    this.load.audio("jump", ["assets/jump.ogg", "assets/jump.mp3"]);
+    this.load.audio("coin", ["rubberDuck.ogg", "rubberDuck.mp3"]);
+    this.load.audio("dead", ["assets/dead.ogg", "assets/dead.mp3"]);
 
-		this.load.image("pixel", "assets/pixel.png");
-	}
+    this.load.image("pixel", "assets/pixel.png");
+  }
+
 
 	/**
 	 * Called once. Create any objects you need here!
@@ -32,7 +33,16 @@ class GameScene extends Phaser.Scene {
 	create() {
 
 		// TODO 7.1: add lives variable
+		this.lives = 3;
+		this.livesLabel = this.add.text(30, 50, "", {
+			font: "18 px Arial",
+			fill: "#ffffff",
+		});
 
+		updateLivesLabel() {
+			this.livesLabel.setText("lives: " + this.lives);
+		}
+	}
 		// TODO 7.2: add liveslabel variable (text shown) an update for it
 
 		// create the player sprite
@@ -52,9 +62,6 @@ class GameScene extends Phaser.Scene {
 			repeat: -1,
 		});
 
-		// add gravity to make the player fall
-		this.player.body.gravity.y = 500;
-
 		// create arrow keys
 		this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -73,6 +80,14 @@ class GameScene extends Phaser.Scene {
 		});
 
 		this.score = 0;
+			
+   		this.lives = 3;
+    this.livesLabel = this.add.text(30, 50, "", {
+      font: "18px Arial",
+      fill: "#ffffff",
+    });
+    this.updateLivesLabel();
+
 
 		// add enemies!
 		this.enemies = this.physics.add.group();
