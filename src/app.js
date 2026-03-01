@@ -9,11 +9,157 @@ class SceneName extends Phaser.Scene {
 	preload() {
 	// called at the beginning to load assets
 		this.load.image("logo", "asset_link_here.png");
+		this.load.image("enemy", "assets/enemy.png");
 	}
-	create() {
+	createLogo() {
 	// called after preload method
 		this.add.image(400, 300, "logo");
 	}
+	
+	updateLivesLabel() {
+		this.livesLabel.setText("lives: " + this.lives);
+	}
+	update() {
+		if (!this.player.active) {
+			// the player is dead
+			return;
+		}
+
+		this.movePlayer();
+		this.checkCoinCollisions();
+
+		// If the player goes out of bounds (ie. falls through a hole),
+		// the player dies
+		if (this.player.y > this.game.config.height || this.player.y < 0) {
+			this.handlePlayerDeath();
+		}
+		
+	}
+	createWalls() {
+		// create the tilemap
+		let map = this.add.tilemap("map");
+
+		// Add the tileset to the map
+		// the first parameter is the name of the tileset in Tiled
+		// the second parameter is the name of the tileset in preload()
+		let tileset = map.addTilesetImage("tileset", "tileset");
+		this.walls = map.createLayer("Level 1", tileset);
+
+		// Enable collisions for the first tile (the blue walls)
+		this.walls.setCollision(1);
+	}
+	movePlayer() {
+		// check for active input
+		if (this.cursors.left.isDown) {
+			// move left
+			this.player.body.velocity.x = -200;
+			this.player.anims.play("left", true);
+		} else if (this.cursors.right.isDown) {
+			// move right
+			this.player.body.velocity.x = 200;
+			this.player.anims.play("right", true);
+		} else {
+			// stop moving in the horizontal
+			this.player.body.velocity.x = 0;
+			this.player.setFrame(0);
+		}
+
+		if (this.cursors.up.isDown) {
+      // move up
+      this.player.body.velocity.y = -200;
+      this.player.anims.play("up", true);
+    } else if (this.cursors.down.isDown) {
+	  // move down
+	  this.player.body.velocity.y = 200;
+	  this.player.anims.play("down", true);
+	} else {
+	// stop moving in the vertical
+	this.player.body.velocity.y = 0;
+	}
+  }
+
+addEnemy() {
+	if (this.level == 1){
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+
+		
+//copy this for other enemies
+	}
+
+	if (this.level == 2){
+
+		let enemy = this.enemies.create(400,300,"enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+
+
+	}
+
+	if (this.level == 3){		
+
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+		let enemy = this.enemies.create(400,300, "enemy");
+		enemy.body.bounce.x = 1;
+		enemy.body.velocity.x = 100;
+
+
+	}
+
+}
+
+
+	
+	handlePlayerDeath() {
+		this.scene.restart();
+		consol.log("i'm dead");
+		this.deadSound.play();
+		this.emitter.explode(this.emitter.quantity, this.player.x, this.player.y);
+
+		// we can't immediately restart the scene; otherwise our particles will disappear
+		// delete the player
+		this.player.setVisible(false);
+		this.player.setActive(false);
+		// delete all the enemies
+		this.enemies.clear(true, true);
+
+		// TODO 7.4: decrement lives and update the lives label
+		this.lives -= 1;
+		this.updateLivesLabel();
+		this.time.addEvent({
+			delay: 1000,
+			callback: () => {
+			if (this.lives > 0) {
+				this.player.setVisible(true);
+				this.player.setActive(true);
+				this.player.setPosition(
+					this.game.config.width / 2,
+					this.game.config.height / 2,
+				);
+			} else {
+				this.scene.start("WelcomeScene");
+			}
+		},
+	});
+}
 } 
 // TODO 2: Update app.js to IMPORT the GameScene from gameScene.js
 
@@ -21,19 +167,9 @@ class SceneName extends Phaser.Scene {
 	/**
 	 * Called once. Create any objects you need here!
 	 */
-	create() {
+	
 
-		// TODO 7.1: add lives variable
-		this.lives = 3;
-		this.livesLabel = this.add.text(30, 50, "", {
-			font: "18 px Arial",
-			fill: "#ffffff",
-		});
-
-		updateLivesLabel() {
-			this.livesLabel.setText("lives: " + this.lives);
-		}
-	}
+	
 		// TODO 7.2: add liveslabel variable (text shown) an update for it
 
 		// create the player sprite
@@ -114,28 +250,14 @@ class SceneName extends Phaser.Scene {
 			// don't start the explosion right away
 			emitting: false,
 		});
-	}
+	
 
-	updateLivesLabel() {
-		// TODO 7.3: create function that updates the lives label
-	}
+	
 
 	/**
 	 * Creates the walls of the game
 	 */
-	createWalls() {
-		// create the tilemap
-		let map = this.add.tilemap("map");
-
-		// Add the tileset to the map
-		// the first parameter is the name of the tileset in Tiled
-		// the second parameter is the name of the tileset in preload()
-		let tileset = map.addTilesetImage("tileset", "tileset");
-		this.walls = map.createLayer("Level 1", tileset);
-
-		// Enable collisions for the first tile (the blue walls)
-		this.walls.setCollision(1);
-	}
+	
 
 	/**
 	 * Phaser calls this function once a frame (60 times a second).
@@ -143,166 +265,34 @@ class SceneName extends Phaser.Scene {
 	 * Use this function to move the player in response to actions,
 	 * check for win conditions, etc.
 	 */
-	update() {
-		if (!this.player.active) {
-			// the player is dead
-			return;
-		}
-
-		this.movePlayer();
-		this.checkCoinCollisions();
-
-		// If the player goes out of bounds (ie. falls through a hole),
-		// the player dies
-		if (this.player.y > this.game.config.height || this.player.y < 0) {
-			this.handlePlayerDeath();
-		}
-	}
+	
 
 	/**
 	 * Handles moving the player with the arrow keys
 	 */
-	movePlayer() {
-		// check for active input
-		if (this.cursors.left.isDown) {
-			// move left
-			this.player.body.velocity.x = -200;
-			this.player.anims.play("left", true);
-		} else if (this.cursors.right.isDown) {
-			// move right
-			this.player.body.velocity.x = 200;
-			this.player.anims.play("right", true);
-		} else {
-			// stop moving in the horizontal
-			this.player.body.velocity.x = 0;
-			this.player.setFrame(0);
-		}
-
-		if (this.cursors.up.isDown) {
-      // move up
-      this.player.body.velocity.y = -200;
-      this.player.anims.play("up", true);
-    } else if (this.cursors.down.isDown) {
-	  // move down
-	  this.player.body.velocity.y = 200;
-	  this.player.anims.play("down", true);
-	} else {
-	// stop moving in the vertical
-	this.player.body.velocity.y = 0;
-	}
-  }
+	
 
 	/**
 	 * Check to see whether the player has collided with any coins
 	 */
-	checkCoinCollisions() {
-		if (this.physics.overlap(this.player, this.coin)) {
-			// the player has taken a coin!
-			// add 5 to the score
-			this.score += 5;
-			// update the score label
-			this.scoreLabel.setText("score: " + this.score);
-			// move the coin to a new spot
-			this.moveCoin();
-			this.coinSound.play();
-		}
-	}
+	
 
 	/**
 	 * Move the coin to a different random location
 	 */
-	moveCoin() {
-		// these are the possible positions the coin can move to
-		let positions = [
-			{ x: 120, y: 135 }, { x: 680, y: 135 },
-			{ x: 120, y: 295 }, { x: 680, y: 295 },
-			{ x: 120, y: 455 }, { x: 680, y: 455 }
-		];
-
-		// don't move to the same location it was already at
-		positions = positions.filter((p) => !(p.x === this.coin.x && p.y === this.coin.y));
-
-		let newPosition = Phaser.Math.RND.pick(positions);
-		this.coin.setPosition(newPosition.x, newPosition.y);
-		this.coin.setScale(0);
-
-		this.tweens.add({
-			targets: this.coin,
-			scale: 1,
-			duration: 300,
-		});
-		this.tweens.add({
-			targets: this.player,
-			scale: 1.3,
-			duration: 100,
-			yoyo: true, // perform the tween forward then backward
-		});
-	}
+	
 
 	/**
 	 * Create a new enemy
 	 */
-	addEnemy() {
-		let enemy = this.enemies.create(this.game.config.width / 2, 0, "enemy");
-
-
-		// TODO 8: this below gravity/velocity code to use something based on randomness! 
-
-		// add gravity to the enemy to make it fall
-		enemy.body.gravity.y = 500;
-		// randomly make the enemy move left or right
-		enemy.body.velocity.x = Phaser.Math.RND.pick([-200, 200]);
-
-
-		enemy.body.bounce.x = 1;
-
-		// destroy the enemy after 15 seconds
-		// this is roughly how long it takes to fall through the hole
-		this.time.addEvent({
-			delay: 15000,
-			callback: () => enemy.destroy(),
-		});
-	}
+	
 	/*
 	* Called when the player dies. Restart the game
 	*/
-	handlePlayerDeath() {
-		this.scene.restart();
-		consol.log("i'm dead");
-		this.deadSound.play();
-		this.emitter.explode(this.emitter.quantity, this.player.x, this.player.y);
+		
 
-		// we can't immediately restart the scene; otherwise our particles will disappear
-		// delete the player
-		this.player.setVisible(false);
-		this.player.setActive(false);
-		// delete all the enemies
-		this.enemies.clear(true, true);
 
-		// TODO 7.4: decrement lives and update the lives label
-		this.lives -= 1;
-		this.updateLivesLabel();
-		this.time.addEvent({
-			delay: 1000,
-			callback; () => {
-			if (this.lives > 0) {
-				this.player.setVisible(true);
-				this.player.setActive(true);
-				this.player.setPosition(
-					this.game.config.width / 2,
-					this.game.config.height / 2,
-				);
-			} else {
-				this.scene.start("WelcomeScene");
-			}
-		},
-	});
-}	
 
-updateLivesLabel() {
-	this.livesLabel.setText("lives: " + this.lives);
-}
-}
 		// restart the scene after 1 second
 		this.time.addEvent({
 			delay: 1000,
@@ -316,8 +306,8 @@ updateLivesLabel() {
 				}
 			}
 		});
-	}
-}
+	
+
 
 // TODO 3: Add WelcomeScene
 class WelcomeScene extends Phaser.Scene {
