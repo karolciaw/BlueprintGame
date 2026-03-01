@@ -10,7 +10,7 @@ class GameScene extends Phaser.Scene {
       frameHeight: 20,
     });
 
-    this.load.image("tilemap", "assets/tilemap.png");
+    this.load.image("tileset", "assets/tileset.png");
     // created with Tiled tilemap editor
     this.load.tilemapTiledJSON("map", "assets/map.json");
 
