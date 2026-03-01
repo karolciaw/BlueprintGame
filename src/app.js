@@ -1,30 +1,21 @@
 import Phaser from "phaser";
+import GameScene from "./gameScene";
 
 // TODO 1: Move this GameScene into gameScene.js, a new file
-// TODO 2: Update app.js to IMPORT the GameScene from gameScene.js
-class GameScene extends Phaser.Scene {
+class SceneName extends Phaser.Scene {
 	constructor() {
-		super("GameScene")
+		super( "SceneName" );
 	}
- preload() {
-    this.load.spritesheet("player", "duckPlayer.png", {
-      frameWidth: 20,
-      frameHeight: 20,
-    });
-
-    this.load.image("tileset", "assets/tileset.png");
-    // created with Tiled tilemap editor
-    this.load.tilemapTiledJSON("map", "assets/map.json");
-
-    this.load.image("coin", "rubberDuck.png");
-    this.load.image("enemy", "assets/enemy.png");
-
-    this.load.audio("jump", ["assets/jump.ogg", "assets/jump.mp3"]);
-    this.load.audio("coin", ["rubberDuck.ogg", "rubberDuck.mp3"]);
-    this.load.audio("dead", ["assets/dead.ogg", "assets/dead.mp3"]);
-
-    this.load.image("pixel", "assets/pixel.png");
-  }
+	preload() {
+	// called at the beginning to load assets
+		this.load.image("logo", "asset_link_here.png");
+	}
+	create() {
+	// called after preload method
+		this.add.image(400, 300, "logo");
+	}
+} 
+// TODO 2: Update app.js to IMPORT the GameScene from gameScene.js
 
 
 	/**
