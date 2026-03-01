@@ -212,6 +212,7 @@ createWalls() {
       this.moveCoin();
       this.coinSound.play();
     }
+ }
 
 /**
  * Move the coin to a different random location
@@ -279,7 +280,7 @@ createWalls() {
       enemy9.body.bounce.x = 1;
       enemy9.body.velocity.x = 100;
     }
-  }
+  } 
 /*
 * Called when the player dies. Restart the game
 */
@@ -315,7 +316,6 @@ handlePlayerDeath() {
         }
       },
     });
-  }
 
 
 // restart the scene after 1 second
@@ -332,13 +332,6 @@ this.time.addEvent({
   }
 });
 
-
-class GameScene extends Phaser.Scene {
-	constructor() {
-		super("GameScene")
-	}
-  }
-} 
-
+}
 }
 export default GameScene; 
