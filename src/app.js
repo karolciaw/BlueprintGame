@@ -276,6 +276,7 @@ class GameScene extends Phaser.Scene {
 					// TODO 7.6: set what we want to do if there are still lives left
 				} else {
 					// TODO 7.7: what do you want to do instead? maybe go back to welcomescene?
+					this.scene.restart()
 				}
 			}
 		});
